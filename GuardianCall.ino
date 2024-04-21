@@ -2,6 +2,24 @@
 #include "time.h"
 #include "Preferences.h"
 
+#include <Firebase_ESP_Client.h>
+#include "addons/TokenHelper.h"
+#include "addons/RTDBHelper.h"
+
+#define API_KEY "Firebase_API_key"
+#define DATABASE_URL "FireBase_database_link"
+
+FirebaseData fbdo;
+FirebaseAuth auth;
+FirebaseConfig config;
+
+unsigned long sendDataPrevMillis = 0;
+const long sendDataIntervalMillis = 5000;
+bool signupOK = false;
+
+float store_random_Float_Val;
+int store_random_Int_Val;
+
 const char* ssidMem    = "ssid";
 const char* passwordMem   = "password";  // this "ssid" , "password" are not just the values, they defined how these variables should have  stored in the preferences library
 //Neme9s8i7s
@@ -36,11 +54,69 @@ void setup(){
   // Init and get the time
   configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
 
+
+  config.api_key = API_KEY;
+  config.database_url = DATABASE_URL;
+
+  // Sign up.
+  Serial.print("Sign up new user... ");
+  if (Firebase.signUp(&config, &auth, "", "")){
+    Serial.println("ok");
+    signupOK = true;
+  }
+  else{
+    Serial.printf("%s\n", config.signer.signupError.message.c_str());
+  }
+
+  // Assign the callback function for the long running token generation task.
+  config.token_status_callback = tokenStatusCallback; //--> see addons/TokenHelper.h
+  
+  Firebase.begin(&config, &auth);
+  Firebase.reconnectWiFi(true);
 }
+
+
 
 void loop(){
   delay(1000);
   printLocalTime();
+
+  if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis > sendDataIntervalMillis || sendDataPrevMillis == 0)){
+    sendDataPrevMillis = millis();
+
+    int randNumber = random(15, 40);
+    float f = (float)randNumber / 1.01;
+    int i = (int(f*100));
+    store_random_Float_Val = float(i) / 100;
+    store_random_Int_Val = random(10, 99);
+
+    Serial.print("Random Float_Val : ");
+    Serial.println(store_random_Float_Val);
+    Serial.print("Random Int_Val   : ");
+    Serial.println(store_random_Int_Val);
+    
+    // Write an Int number on the database path test/random_Float_Val.
+    if (Firebase.RTDB.setFloat(&fbdo, "Device1/random_Float_Val", store_random_Float_Val)) {
+      Serial.println("PASSED");
+      Serial.println("PATH: " + fbdo.dataPath());
+      Serial.println("TYPE: " + fbdo.dataType());
+    }
+    else {
+      Serial.println("FAILED");
+      Serial.println("REASON: " + fbdo.errorReason());
+    }
+    
+    // Write an Float number on the database path test/random_Int_Val.
+    if (Firebase.RTDB.setInt(&fbdo, "Device1/random_Int_Val", store_random_Int_Val)) {
+      Serial.println("PASSED");
+      Serial.println("PATH: " + fbdo.dataPath());
+      Serial.println("TYPE: " + fbdo.dataType());
+    }
+    else {
+      Serial.println("FAILED");
+      Serial.println("REASON: " + fbdo.errorReason());
+    }
+  }
 }
 
 
