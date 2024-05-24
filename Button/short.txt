@@ -1,0 +1,117 @@
+#include <esp_now.h>
+#include <WiFi.h>
+#include "Preferences.h"
+
+#include <Firebase_ESP_Client.h>
+#include "addons/TokenHelper.h"
+#include "addons/RTDBHelper.h"
+
+#define API_KEY "Firebase_API_key"
+#define DATABASE_URL "FireBase_database_link"
+
+String path = "100001/Buttons/01";  //Device ID of 100001  and   button id of 01
+
+FirebaseData fbdo;
+FirebaseAuth auth;
+FirebaseConfig config;
+bool signupOK = false;
+
+const int btnPin = 4;
+bool btnState;
+
+Preferences preferences;
+
+String ssid;
+String password;
+String haveReceived;
+
+const char* ssidMem = "ssid";
+const char* passwordMem = "password";
+const char* credsReceived = "0";
+
+struct __attribute__((packed)) dataPacket {
+  String id;
+  String pwd;
+} packet;
+
+void OnDataRecv(const uint8_t* mac, const uint8_t* incomingData, int len) {
+  dataPacket packet;
+  memcpy(&packet, incomingData, sizeof(packet));
+  ssid = packet.id;
+  password = packet.pwd;
+}
+
+void setup() {
+  // Init Serial Monitor
+  Serial.begin(115200);
+  preferences.begin("wifiCreds", false);
+
+  ssid = preferences.getString(ssidMem, "");  //search for stored ssid and pwd in the preferences and return "" found none
+  password = preferences.getString(passwordMem, "");
+  haveReceived = preferences.getString(credsReceived, "0");
+
+
+  // Set device as a Wi-Fi Station
+  if (haveReceived == "0") {
+    WiFi.mode(WIFI_STA);
+    ssid ="";
+    password ="";
+    // Init ESP-NOW
+    esp_now_init();
+
+    esp_now_register_recv_cb(OnDataRecv);
+    while (ssid =="" && password ==""){
+
+    }
+
+    preferences.putString(credsReceived, "1");
+    preferences.putString(ssidMem, ssid );
+    preferences.putString(passwordMem, password );
+    ESP.restart();
+  }
+
+  WiFi.begin(ssid, password);
+
+  byte attempts = 0;
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    attempts++;
+    if (attempts > 20){
+      preferences.putString(credsReceived, "0");  
+      WiFi.disconnect(true);
+      ESP.restart();
+    }
+  }
+
+  config.api_key = API_KEY;
+  config.database_url = DATABASE_URL;
+
+  if (Firebase.signUp(&config, &auth, "", "")) {
+    signupOK = true;
+  }
+
+  // Assign the callback function for the long running token generation task.
+  config.token_status_callback = tokenStatusCallback;  //--> see addons/TokenHelper.h
+
+  Firebase.begin(&config, &auth);
+  Firebase.reconnectWiFi(true);
+
+  pinMode(btnPin, INPUT_PULLDOWN);
+}
+
+
+void loop() {
+
+  btnState = digitalRead(btnPin);
+
+  if (Firebase.ready() && signupOK && btnState) {
+    preferences.putString(credsReceived, "1");
+    // Write an Int number on the database path test/random_Float_Val.
+    if (Firebase.RTDB.setInt(&fbdo, path, 1)) {
+      delay(1000);
+      Firebase.RTDB.setInt(&fbdo, path, 0);
+      btnState = false;
+    }
+  }
+
+}
