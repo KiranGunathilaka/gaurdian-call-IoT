@@ -1,152 +1,61 @@
-#include <esp_now.h>
-#include <WiFi.h>
-#include "Preferences.h"
+#include <espnow.h>
+#include <ESP8266WiFi.h>
 
-#include <Firebase_ESP_Client.h>
-#include "addons/TokenHelper.h"
-#include "addons/RTDBHelper.h"
+int btnId = 3;
 
-#define API_KEY "Firebase_API_key"
-#define DATABASE_URL "FireBase_database_link"
+ADC_MODE(ADC_VCC);
 
-String path = "100001/Buttons/01";  //Device ID of 100001  and   button id of 01
+// Set your slave device's MAC Address
+uint8_t slaveMacAddress[] = { 0x80, 0x7D, 0x3A, 0x1D, 0x7D, 0x59 };
 
-FirebaseData fbdo;
-FirebaseAuth auth;
-FirebaseConfig config;
-bool signupOK = false;
+// Define the structure for the data to be transmitted
+struct transmitData {
+  uint32_t buttonID;
+  float battery;  // Using uint16_t instead of float for battery voltage
+} data;
 
-const int btnPin = 4;
-bool btnState;
-
-Preferences preferences;
-
-String ssid;
-String password;
-String haveReceived;
-
-const char* ssidMem = "ssid";
-const char* passwordMem = "password";
-const char* credsReceived = "0";
-//this mac 48:E7:29:A3:7B:18
-
-struct __attribute__((packed)) dataPacket {
-  String id;
-  String pwd;
-} packet;
-
-bool isReceivedOkay = false;
-
-void OnDataRecv(const uint8_t* mac, const uint8_t* incomingData, int len) {
-  // callback function that will be executed when data is received
-  dataPacket packet;
-  memcpy(&packet, incomingData, sizeof(packet));
-  ssid = packet.id;
-  password = packet.pwd;
-  isReceivedOkay = true;
+// Callback function to handle the result of data transmission
+void OnDataSent(uint8_t* mac_addr, uint8_t status) {
+  Serial.print("\r\nLast Packet Send Status:\t");
+  if (status == 0) {
+    Serial.println("Delivery Success");
+  } else {
+    Serial.println("Delivery Failed");
+  }
 }
 
 void setup() {
-  // Init Serial Monitor
   Serial.begin(115200);
-  preferences.begin("wifiCreds", false);
 
-  ssid = preferences.getString(ssidMem, "");  //search for stored ssid and pwd in the preferences and return "" found none
-  password = preferences.getString(passwordMem, "");
-  haveReceived = preferences.getString(credsReceived, "0");
+  WiFi.mode(WIFI_STA);
 
-
-  // Set device as a Wi-Fi Station
-  if (haveReceived == "0") {
-    WiFi.mode(WIFI_STA);
-    // Init ESP-NOW
-    ssid = "";
-    password ="";
-
-    if (esp_now_init() != ESP_OK) {
-      Serial.println("Error initializing ESP-NOW");
-      return;
-    }
-    Serial.println("Waiting to connect to Master");
-    esp_now_register_recv_cb(OnDataRecv);
-
-    // byte count = 0;
-    // while (!isReceivedOkay && count<30){
-    //   delay(1000);
-    //   count++;
-    // }
-
-    while (ssid =="" && password =="") {
-    }
-    Serial.println(ssid);
-
-    preferences.putString(credsReceived, "1");
-    preferences.putString(ssidMem, ssid);
-    preferences.putString(passwordMem, password);
-    ESP.restart();
+  // Initializing ESP-NOW
+  if (esp_now_init() != 0) {
+    Serial.println("Error initializing ESP-NOW");
   }
 
-  WiFi.begin(ssid, password);
+  // Setting this device as the controller
+  esp_now_set_self_role(ESP_NOW_ROLE_CONTROLLER);
 
-  byte attempts = 0;
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    attempts++;
-    Serial.print(".");
-    if (attempts > 20) {
-      Serial.print("Can't connect to ");
-      Serial.print(ssid);
-      preferences.putString(credsReceived, "0");
-      ESP.restart();
-    }
-  }
-  if (WiFi.status() == WL_CONNECTED) {
-    Serial.println("WiFi connected.");
-  }
-  Serial.println(WiFi.status());
+  // Registering the callback function for data transmission
+  esp_now_register_send_cb(OnDataSent);
 
-  config.api_key = API_KEY;
-  config.database_url = DATABASE_URL;
+  // Adding the slave device as a peer
+  esp_now_add_peer(slaveMacAddress, ESP_NOW_ROLE_SLAVE, 1, NULL, 0);
 
-  // Sign up.
-  Serial.print("Sign up new user... ");
-  if (Firebase.signUp(&config, &auth, "", "")) {
-    Serial.println("ok");
-    signupOK = true;
-  } else {
-    Serial.printf("%s\n", config.signer.signupError.message.c_str());
-  }
-
-  // Assign the callback function for the long running token generation task.
-  config.token_status_callback = tokenStatusCallback;  //--> see addons/TokenHelper.h
-
-  Firebase.begin(&config, &auth);
-  Firebase.reconnectWiFi(true);
-
-  pinMode(btnPin, INPUT_PULLDOWN);
+  data.buttonID = btnId;
+  data.battery = ((float)ESP.getVcc() / 1024.0);
 }
 
-
 void loop() {
-
-  btnState = digitalRead(btnPin);
-
-  if (WiFi.status() != 3) {
-    //preferences.putString(credsReceived, "0");
-    delay(1000);
-    Serial.println(WiFi.status());
-  }
-
-  if (Firebase.ready() && signupOK && btnState) {
-    preferences.putString(credsReceived, "1");
-    // Write an Int number on the database path test/random_Float_Val.
-    if (Firebase.RTDB.setInt(&fbdo, path, 1)) {
-      Serial.println("PASSED");
-      delay(1000);
-      Firebase.RTDB.setInt(&fbdo, path, 0);
-      btnState = false;
-    } else {
-      Serial.println("Failed: " + fbdo.errorReason());
-    }
+  // Send the data
+  if (millis() < 200){
+    esp_now_send(slaveMacAddress, (uint8_t*)&data, sizeof(data));
+    delay(50);
+  } else {
+    delay(2000);
+    Serial.println("Putting to Sleep");
+    ESP.deepSleep(0);
+    Serial.println("I don't wanna sleep");
   }
 }

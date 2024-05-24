@@ -1,4 +1,3 @@
-#include <esp_now.h>
 #include <WiFi.h>
 #include "time.h"
 #include <Preferences.h>
@@ -8,6 +7,9 @@
 #include <Firebase_ESP_Client.h>
 #include "addons/TokenHelper.h"
 #include "addons/RTDBHelper.h"
+
+#define TX_PIN 41
+#define RX_PIN 40
 
 #define API_KEY "Firebase_API_key"
 #define DATABASE_URL "FireBase_database_link"
@@ -35,8 +37,8 @@ String symbol[8][12] = {
 
 uint16_t calData[5] = { 396, 3350, 270, 3369, 7 };
 
-const int buzzerPin = 8;
-int pressTone = 1000;
+const int buzzerPin = 5;
+int pressTone = 2000;
 
 unsigned long startTime;
 unsigned long elapsedTime;
@@ -50,9 +52,7 @@ bool signupOK = false;
 const char* ssidMem = "ssid";
 const char* passwordMem = "password";  // this "ssid" , "password" are not just the values, they defined how these variables should have  stored in the preferences library
 //Neme9s8i7s
-const char* shouldSend = "shouldSend";  //whether to send credentials to buttons via ESP now
 const char* isConnected = "isConnected";
-
 
 Preferences preferences;
 
@@ -60,38 +60,20 @@ const char* ntpServer = "in.pool.ntp.org";
 const long gmtOffset_sec = 19800;  //GMT+5:30
 const int daylightOffset_sec = 0;
 
-uint8_t btn1MacAddr[] = { 0x48, 0xE7, 0x29, 0xA3, 0x7B, 0x18 };  //btn1 mac
-
-struct transmitData {
-  String id;
-  String pwd;
-} data;
-
-esp_now_peer_info_t peerInfo;
-
 int prevIntTime;
 String msg;
 bool buzzerOn;
 byte buzzerCount;
 
-// callback when data is sent
-bool isSentOkay = false;
-void OnDataSent(const uint8_t* mac_addr, esp_now_send_status_t status) {
-  Serial.print("\r\nLast Packet Send Status:\t");
-
-  if (status == ESP_NOW_SEND_SUCCESS) {
-    preferences.putString(shouldSend, "0");
-    Serial.println("Delivery Success");
-    isSentOkay = true;
-  } else {
-    Serial.println("Delivery Failed");
-  }
-}
-
 void setup() {
   // Initialize Serial Monitor
   Serial.begin(115200);
+  //Initializing serial communication betweeen master ESP01s
+  Serial2.begin(115200, SERIAL_8N1, RX_PIN, TX_PIN);
 
+  pinMode(buzzerPin, OUTPUT);
+
+  //initializing tft object and initial display
   tft.init();
   tft.setRotation(1);
   tft.setTouch(calData);
@@ -99,68 +81,13 @@ void setup() {
   tft.setTextDatum(MC_DATUM);
   tft.setTextSize(2);
 
-  preferences.begin("WiFiVars");                     //opens a preferences library with the namespace "WiFiVars"
-  String ssid = preferences.getString(ssidMem, "");  //search for stored ssid and pwd in the preferences and return "" found none
+  //opens a preferences library with the namespace "WiFiVars" search for stored ssid and pwd in the preferences and return "" found none
+  preferences.begin("WiFiVars");
+  String ssid = preferences.getString(ssidMem, "");
   String password = preferences.getString(passwordMem, "");
-  String shouldsend = preferences.getString(shouldSend, "0");
-  String isCon = preferences.getString(isConnected, "0");
+  String isCon = preferences.getString(isConnected, "0");  //this memorize whether the device was connected to a wifi before the last turn off
 
-  if (shouldsend == "0") {
-    welcomeScreen();
-  }
-
-
-  if (shouldsend == "1") {
-    WiFi.mode(WIFI_STA);
-    Serial.println("Ready to connect Buttons");
-    bool pass = buttonConnectDisplay(ssid);
-
-    if (pass) {
-      Serial.println("PASS pressed");
-      preferences.putString(shouldSend, "0");
-    } else {
-      Serial.println("CONNECT Pressed");
-
-      // Init ESP-NOW
-      if (esp_now_init() != ESP_OK) {
-        Serial.println("Error initializing ESP-NOW");
-        return;
-      }
-
-      esp_now_register_send_cb(OnDataSent);
-
-      // Register peer
-      memcpy(peerInfo.peer_addr, btn1MacAddr, 6);
-      peerInfo.channel = 0;
-      peerInfo.encrypt = false;
-
-      // Add peer
-      if (esp_now_add_peer(&peerInfo) != ESP_OK) {
-        Serial.println("Failed to add peer");
-        return;
-      }
-
-      // Set values to send
-      data.id = ssid;
-      data.pwd = password;
-
-      // Send message 3 times via ESP-NOW
-      for (byte i = 0; i < 3; i++) {
-        esp_err_t result = esp_now_send(btn1MacAddr, (uint8_t*)&data, sizeof(data));
-
-        if (result == ESP_OK) {
-          Serial.println("Sent with success");
-        } else {
-          Serial.println("Error sending the data");
-        }
-        delay(500);
-      }
-      //preferences.putString(shouldSend, "0");  //////////////////////////////////Remove this when you have the other esp
-
-      buttonsConnectedResponse(isSentOkay);
-    }
-  }
-
+  welcomeScreen();
 
   if (isCon == "0") {
     initialConnection();
@@ -171,7 +98,6 @@ void setup() {
   }
   // Init and get the time
   configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
-
 
   config.api_key = API_KEY;
   config.database_url = DATABASE_URL;
@@ -190,13 +116,15 @@ void setup() {
   Firebase.begin(&config, &auth);
   Firebase.reconnectWiFi(true);
 
-  pinMode(buzzerPin, OUTPUT);
+  //interupt is caused by esp01s
+  //attachInterrupt(digitalPinToInterrupt(triggerPin), serialInteruptHandler, RISING);
 }
 
 
 int hh, mm, day, month, monthDay, intTime;
 
 void loop() {
+  serialInteruptHandler();
 
   struct tm time = getLocalTime();
 
@@ -255,7 +183,7 @@ void loop() {
     }
   }
 
-  if (prevIntTime == intTime && buzzerOn && buzzerCount < 25) {
+  if (prevIntTime == intTime && buzzerOn && buzzerCount < 20) {
     tone(buzzerPin, 1000);
     delay(400);
     tone(buzzerPin, 3000);
@@ -265,6 +193,44 @@ void loop() {
     buzzerCount++;
   }
 }
+
+uint32_t btnID;
+float battery;
+
+//Callback used when it is need to send button press event to the firebase
+void serialInteruptHandler() {
+  //put a tone here
+  if (Serial2.available()) {
+    btnID = Serial2.readStringUntil('\n').toInt();
+    Serial.println(btnID);
+    battery = Serial2.readStringUntil('\n').toFloat();
+    Serial.println(battery);
+
+    String btnPathStatus = deviceID + "/Buttons/" + btnID + "/Status/";
+    String btnPathBat = deviceID + "/Buttons/" + btnID + "/Battery/";
+
+    if (Firebase.ready() && signupOK && btnID != 0) {
+      // Write an btn status and battery percentage on the database path specified for the button ID.
+      if (Firebase.RTDB.setInt(&fbdo, btnPathStatus, 1)) {
+        Firebase.RTDB.setFloat(&fbdo, btnPathBat, battery);
+        Serial.println("PASSED");
+        tone(buzzerPin, 3000);
+        delay(2000);
+        noTone(buzzerPin);
+        Firebase.RTDB.setInt(&fbdo, btnPathStatus, 0);
+      } else {
+        Serial.println("Failed: " + fbdo.errorReason());
+      }
+    } else if (btnID != 0) {
+      Serial.print("Firebase Sign up error... SignUp status : ");
+      Serial.println(signupOK);
+    }
+  }
+}
+
+
+
+//put a button namer prompts and function here
 
 
 struct tm getLocalTime() {
@@ -325,7 +291,6 @@ void initialConnection() {
   bool connectWifiResponse = connectWifi(inpSSID, inpPassword);
 
   if (connectWifiResponse) {
-    preferences.putString(shouldSend, "1");
     preferences.putString(isConnected, "1");
   }
   ESP.restart();
@@ -346,6 +311,7 @@ bool connectWifi(String id, String pwd) {
     delay(500);
     attempts++;
     Serial.print(".");
+    //Serial.println(WiFi.status());
     if (attempts > 20) {
       tft.fillScreen(TFT_BLACK);
       tft.setTextColor(TFT_RED);
@@ -531,65 +497,7 @@ String analogTime(int hh, int mm) {
   return nowTime;
 }
 
-bool buttonConnectDisplay(String ssid) {
-
-  tft.setTextColor(TFT_GREEN);
-  tft.setTextDatum(ML_DATUM);
-  tft.fillScreen(TFT_BLACK);
-  String temp = "Connected to " + ssid + "!";
-  tft.drawString(temp, 10, 20, 2);
-
-  tft.setTextColor(TFT_WHITE);
-  tft.drawString("To connect buttons ", 10, 50, 2);
-  tft.drawString("turn them on and  ", 10, 75, 2);
-  tft.drawString("press CONNECT below", 10, 100, 2);
-  tft.drawString("when ready  ", 10, 125, 2);
-  tft.setTextDatum(MC_DATUM);
-  tft.fillRoundRect(90, 145, 135, 45, 10, TFT_RED);
-  tft.drawString("CONNECT", 160, 165, 2);
-
-  tft.fillRoundRect(90, 195, 135, 45, 10, TFT_RED);
-  tft.drawString("PASS", 160, 215, 2);
-
-  uint16_t x = 0, y = 0;  // To store the touch coordinates
-
-  bool isBtnPressed = false;
-  bool isPassPressed = false;
-  while (!isBtnPressed) {
-    bool pressed = tft.getTouch(&x, &y);
-    if (pressed) {
-      if (x > 90 && x < 225 && y > 145 && y < 190) {
-        tone(buzzerPin, pressTone);
-        delay(100);
-        noTone(buzzerPin);
-      }
-      if (x > 90 && x < 225 && y > 195 && y < 240) {
-        isPassPressed = true;
-        tone(buzzerPin, pressTone);
-        delay(100);
-        noTone(buzzerPin);
-      }
-      isBtnPressed = true;
-    }
-  }
-  return isPassPressed;
-}
-
-void buttonsConnectedResponse(bool isOkay) {
-  tft.fillScreen(TFT_BLACK);
-  tft.setTextDatum(MC_DATUM);
-  if (isOkay) {
-    tft.setTextColor(TFT_GREEN);
-    tft.drawString("Buttons Connected", 160, 120, 2);
-  } else {
-    tft.setTextColor(TFT_RED);
-    tft.drawString("Connection Failed", 160, 100, 2);
-    tft.drawString("You need to reconnect", 160, 130, 1);
-    tft.drawString("Restarting...", 160, 165, 2);
-    delay(2000);
-    ESP.restart();
-  }
-}
+//ButtonConnectDisplay and ButtonConnectResponse removed... See Old code
 
 int wifiConnectionLost() {
   // add a 20s sprite countdown
