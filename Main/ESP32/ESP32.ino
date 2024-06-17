@@ -11,8 +11,8 @@
 #define TX_PIN 41
 #define RX_PIN 40
 
-#define API_KEY "Firebase_API_key"
-#define DATABASE_URL "FireBase_database_link"
+#define API_KEY ""
+#define DATABASE_URL ""
 
 String deviceID = "100001";
 String path;
@@ -40,8 +40,8 @@ uint16_t calData[5] = { 396, 3350, 270, 3369, 7 };
 const int buzzerPin = 5;
 int pressTone = 2000;
 
-unsigned long startTime;
-unsigned long elapsedTime;
+unsigned long startTime = 0;
+unsigned long elapsedTime = 0;
 
 FirebaseData fbdo;
 FirebaseAuth auth;
@@ -64,6 +64,11 @@ int prevIntTime;
 String msg;
 bool buzzerOn;
 byte buzzerCount;
+
+int hh ,mm, day , month , monthDay;
+
+uint32_t btnID;
+float battery;
 
 void setup() {
   // Initialize Serial Monitor
@@ -120,11 +125,9 @@ void setup() {
   //attachInterrupt(digitalPinToInterrupt(triggerPin), serialInteruptHandler, RISING);
 }
 
-
-int hh, mm, day, month, monthDay, intTime;
-
 void loop() {
-  serialInteruptHandler();
+
+  esp01toEsp32();
 
   struct tm time = getLocalTime();
 
@@ -145,6 +148,7 @@ void loop() {
       String isCon = "0";
       preferences.putString(isConnected, isCon.c_str());
       ESP.restart();
+
     } else {
       tft.fillScreen(TFT_BLACK);
       tft.setTextColor(TFT_WHITE);
@@ -155,7 +159,6 @@ void loop() {
         clockNoAlarm(hh, mm, day, month, monthDay);
         tft.setTextColor(TFT_WHITE);
         tft.drawString("No Connection", 160, 200, 1);
-        delay(20000);
       }
     }
   }
@@ -164,7 +167,7 @@ void loop() {
     prevIntTime = intTime;
     Serial.println(&time, "%A, %B %d %H:%M");
 
-    path = deviceID + "/Alarms/" + day + "/" + intTime;
+    path = "Devices/" + deviceID + "/Alarms/" + day + "/" + intTime;
     if (Firebase.ready() && signupOK) {
       if (Firebase.RTDB.getString(&fbdo, path)) {
         msg = fbdo.stringData();
@@ -194,20 +197,27 @@ void loop() {
   }
 }
 
-uint32_t btnID;
-float battery;
 
 //Callback used when it is need to send button press event to the firebase
-void serialInteruptHandler() {
+void esp01toEsp32() {
   //put a tone here
-  if (Serial2.available()) {
+  if (Serial2.available() ) {
     btnID = Serial2.readStringUntil('\n').toInt();
     Serial.println(btnID);
     battery = Serial2.readStringUntil('\n').toFloat();
     Serial.println(battery);
 
-    String btnPathStatus = deviceID + "/Buttons/" + btnID + "/Status/";
-    String btnPathBat = deviceID + "/Buttons/" + btnID + "/Battery/";
+    while (Serial2.available() ) {
+      if (Serial2.readStringUntil('\n').toInt() == btnID){
+        Serial2.read();  // Read and discard each byte in the buffer so even though the button send it couple of times by one press it won't affect
+      }else{
+        break;
+      }
+    }
+
+    String btnPathStatus = "Devices/" + deviceID + "/Buttons/" + btnID + "/Status/";
+    String btnPathBat = "Devices/" + deviceID + "/Buttons/" + btnID + "/Battery/";
+
 
     if (Firebase.ready() && signupOK && btnID != 0) {
       // Write an btn status and battery percentage on the database path specified for the button ID.
@@ -217,7 +227,6 @@ void serialInteruptHandler() {
         tone(buzzerPin, 3000);
         delay(2000);
         noTone(buzzerPin);
-        Firebase.RTDB.setInt(&fbdo, btnPathStatus, 0);
       } else {
         Serial.println("Failed: " + fbdo.errorReason());
       }
@@ -227,10 +236,6 @@ void serialInteruptHandler() {
     }
   }
 }
-
-
-
-//put a button namer prompts and function here
 
 
 struct tm getLocalTime() {
@@ -285,15 +290,12 @@ void initialConnection() {
 
 
   String inpPassword = getKeyboardOut(inpSSID);
-  Serial.print("Final Password is : ");
-  Serial.println(inpPassword);
 
   bool connectWifiResponse = connectWifi(inpSSID, inpPassword);
 
   if (connectWifiResponse) {
     preferences.putString(isConnected, "1");
   }
-  ESP.restart();
 }
 
 
@@ -301,9 +303,9 @@ bool connectWifi(String id, String pwd) {
   // Connect to Wi-Fi
   tft.fillScreen(TFT_BLACK);
   tft.setTextColor(TFT_WHITE);
-  String temp = "Connecting to " + id;
   tft.setTextDatum(MC_DATUM);
-  tft.drawString(temp, 160, 120, 1);
+  tft.drawString("Connecting to" , 160 , 100 ,1);
+  tft.drawString(id, 160, 135, 1);
   WiFi.begin(id.c_str(), pwd.c_str(), 1);
 
   byte attempts = 0;
@@ -315,12 +317,13 @@ bool connectWifi(String id, String pwd) {
     if (attempts > 20) {
       tft.fillScreen(TFT_BLACK);
       tft.setTextColor(TFT_RED);
-      temp = "Can't connect to " + id;
-      tft.drawString(temp, 160, 120, 1);
-      tft.drawString("Check your credentials", 160, 145, 1);
+      tft.drawString("Can't connect to", 160, 100, 1);
+      tft.drawString(id, 160 ,135 , 1);
+      tft.drawString("Check your credentials", 160, 170, 1);
       preferences.putString(isConnected, "0");
       delay(2000);
       WiFi.disconnect(true);
+      ESP.restart();
       return false;
     }
   }
@@ -518,6 +521,11 @@ int wifiConnectionLost() {
   startTime = millis();
   while (!(changePressed || waitPressed) && (millis() - startTime) < 20000) {
     bool pressed = tft.getTouch(&x, &y);
+
+    tone(buzzerPin, 2500);
+    delay(100);
+    noTone(buzzerPin);
+
     if (pressed) {
       if (x > 55 && x < 255 && y > 110 && y < 150) {
         changePressed = true;
@@ -536,6 +544,7 @@ int wifiConnectionLost() {
         return 2;
       }
     }
+    delay(100);
   }
   return 2;
 }

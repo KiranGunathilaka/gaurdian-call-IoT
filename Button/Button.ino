@@ -1,7 +1,7 @@
 #include <espnow.h>
 #include <ESP8266WiFi.h>
 
-int btnId = 3;
+int btnId = 10000101;
 
 ADC_MODE(ADC_VCC);
 
