@@ -1,0 +1,27 @@
+Added Component: Designator=J1(battery connector)
+Added Component: Designator=S1(button)
+Added Component: Designator=U1(esp 01s)
+Added Component: Designator=U2(power module)
+Added Component: Designator=U3(charging module)
+Added Pin To Net: NetName=NetJ1_1 Pin=J1-1
+Added Pin To Net: NetName=NetJ1_1 Pin=U3-2
+Added Net: Name=NetJ1_1
+Added Pin To Net: NetName=NetJ1_2 Pin=J1-2
+Added Pin To Net: NetName=NetJ1_2 Pin=U3-3
+Added Net: Name=NetJ1_2
+Added Pin To Net: NetName=NetS1_1 Pin=S1-1
+Added Pin To Net: NetName=NetS1_1 Pin=U1-6
+Added Net: Name=NetS1_1
+Added Pin To Net: NetName=NetS1_4 Pin=S1-4
+Added Pin To Net: NetName=NetS1_4 Pin=U1-1
+Added Pin To Net: NetName=NetS1_4 Pin=U2-02
+Added Pin To Net: NetName=NetS1_4 Pin=U3-4
+Added Net: Name=NetS1_4
+Added Pin To Net: NetName=NetU1_5 Pin=U1-5
+Added Pin To Net: NetName=NetU1_5 Pin=U1-7
+Added Pin To Net: NetName=NetU1_5 Pin=U2-03
+Added Net: Name=NetU1_5
+Added Pin To Net: NetName=NetU2_01 Pin=U2-01
+Added Pin To Net: NetName=NetU2_01 Pin=U3-1
+Added Net: Name=NetU2_01
+Added Class: Name=Sheet1
