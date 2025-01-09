@@ -53,6 +53,10 @@ Refer below for the source files and distributions
 
 [Original Girhub Repo for the App](https://github.com/KiranGunathilaka/guardian-call-app)
 
+To securely register a caretaker with a device, following sign-up cards are needed.
+
+![Sign-Up Card](/Assets/20240831_091508.jpg)
+
 ## Actual Device
 
 ![Image of the device and pcbs](Assets/presentation_tech%20wizards-20.png)
