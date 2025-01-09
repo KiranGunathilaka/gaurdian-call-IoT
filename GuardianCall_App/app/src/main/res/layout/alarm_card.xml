@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="110dp"
+    android:layout_marginTop="10dp"
+    app:cardBackgroundColor="#69033E68"
+    app:cardCornerRadius="32dp"
+    app:layout_constraintWidth_max="650dp"
+    android:elevation="5dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:background="#69033E68">
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:fontFamily="@font/monospace"
+            android:text="@string/name"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:layout_marginStart="5dp"
+            android:ellipsize="end"
+            app:layout_constraintEnd_toStartOf="@id/switchToggle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/timeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="8:00"
+            android:textSize="29sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            android:textColor="#FFFFFF"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleTextView"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/ampmTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="am"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="3dp"
+            android:textColor="#FFFFFF"
+            app:layout_constraintStart_toEndOf="@id/timeTextView"
+            app:layout_constraintBottom_toBottomOf="@id/timeTextView"/>
+
+        <TextView
+            android:id="@+id/daysTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Mon, Tue, Wed"
+            android:layout_marginTop="15dp"
+            android:textSize="13sp"
+            android:textColor="#FFFFFF"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="15dp"
+            android:gravity="end"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleTextView"
+            app:layout_constraintStart_toEndOf="@id/ampmTextView"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <Switch
+            android:id="@+id/switchToggle"
+            android:layout_width="49dp"
+            android:layout_height="47dp"
+            android:checked="true"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

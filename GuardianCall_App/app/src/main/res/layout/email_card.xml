@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/emailsTextView"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:background="@drawable/text_box_border"
+    android:text="Email 1"
+    android:gravity="center_vertical"
+    android:textColor="#FFFFFF"
+    android:textSize="20sp"
+    android:fontFamily="@font/roboto_regular"
+    android:layout_marginTop="10dp"
+    app:layout_constraintWidth_max="450dp" />
