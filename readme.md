@@ -59,13 +59,9 @@ Refer below for the source files and distributions
 
 ## Some videos in the prototyping phase
 
-<video controls width="600">
-  <source src="/Assets/VID-20240501-WA0005.mp4" type="video/mp4">
-</video>
+[Video 1, before the final circuit implmentation](Assets/VID-20240509-WA0002.mp4)
 
-<video controls width="600">
-  <source src="/Assets/VID-20240509-WA0002.mp4" type="video/mp4">
-</video>
+[Video 2, before using ESP01 for the button, for the proposal evalution](/Assets/VID-20240501-WA0005.mp4)
 
 Furthur updates to the main unit is possible via a USB to TTL converter, so it is possible to make furthur improvements to the hardware after assembling.
 
