@@ -38,6 +38,11 @@ Designed by [Induwara Illukumbura](https://github.com/induwara-iluk)
 ![Main unit enclosure](/Assets/presentation_tech%20wizards-12.png)
 ![Button enclosure](/Assets/presentation_tech%20wizards-13.png)
 
+# UI of Guardian call
+The existing UI is built with the TFT_eSPI library and furthur improvements will be made using LVGL.
+
+![UIs](/Assets/Basic%20UIs%20of%20the%20device.png)
+
 ## App overview
 
 App was designed scalability and giving best user experience in mind. 
