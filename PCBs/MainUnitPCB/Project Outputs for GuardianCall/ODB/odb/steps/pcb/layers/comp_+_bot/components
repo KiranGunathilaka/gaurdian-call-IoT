@@ -1,0 +1,528 @@
+UNITS=MM
+#
+#Component attribute names
+#
+@0 .comp_mount_type
+@1 .comp_height
+
+# CMP 0
+CMP 8 -46.228 8.763 270 N P5 217175-0001 ;0=1,1=0.0000
+TOP 0 -43.27800082 4.44300102 270 N 0 34 1
+TOP 1 -43.27800082 13.08299898 270 N 0 35 2
+TOP 2 -47.07800084 4.44300102 270 N 0 36 3
+TOP 3 -47.07800084 13.08299898 270 N 0 37 4
+TOP 4 -43.19800098 8.263001 270 N 0 4 A5
+TOP 5 -43.19800098 10.2829995 270 N 5 1 A9
+TOP 6 -43.19800098 11.51299958 270 N 17 16 A12
+TOP 7 -43.19800098 9.262999 270 N 0 5 B5
+TOP 8 -43.19800098 7.2430005 270 N 5 0 B9
+TOP 9 -43.19800098 6.01300042 270 N 17 15 B12
+#
+# CMP 1
+CMP 1 -42.799 -24.257 270 N P2 61400416021 ;0=2,1=6.9000
+PRP Color 'White'
+PRP Connector_Type 'USB'
+PRP Contact_Material 'Copper'
+PRP Contact_Plating 'Gold'
+PRP Contact_Resistance '20mO'
+PRP Current_Rating '1.5A'
+PRP Flammability_Rating 'UL94 V-0'
+PRP Gender 'Receptacle'
+PRP Insulation_Material 'PBT'
+PRP Insulation_Resistance '1GO'
+PRP Lead_Free 'Lead Free'
+PRP Length '15.8mm'
+PRP Max_Operating_Temperature '105°C'
+PRP Min_Operating_Temperature '-40°C'
+PRP Mount 'Horizontal, Through Hole'
+PRP NexarPartId '21041530'
+PRP Number_of_Contacts '4'
+PRP Number_of_Pins '4'
+PRP Number_of_Ports '1'
+PRP Number_of_Positions '4'
+PRP Operating_Supply_Voltage '30V'
+PRP Orientation 'Horizontal'
+PRP REACH_SVHC 'Unknown'
+PRP RoHS 'Compliant'
+PRP Termination 'Solder'
+PRP USB_Standard 'USB 2.0'
+PRP Voltage_Rating '30V'
+PRP Voltage_Rating_(DC) '30V'
+PRP Width '14.4mm'
+TOP 0 -36.80900182 -27.75700062 270 N 5 3 1
+TOP 1 -36.80900182 -25.25700054 270 N 0 31 2
+TOP 2 -36.80900182 -23.25699946 270 N 0 32 3
+TOP 3 -36.80900182 -20.75699938 270 N 17 32 4
+TOP 4 -39.51900148 -17.68700044 270 N 0 29 Shell
+TOP 5 -39.51900148 -30.82699956 270 N 0 30 Shell
+#
+# CMP 2
+CMP 9 -33.74200008 29.57399978 180 N J4 B3B-XH-AM(LF)(SN)(P) ;0=2,1=0.0000
+PRP Color 'Natural'
+PRP Connector_Type 'Male Pin'
+PRP Contact_Plating 'Tin'
+PRP Contact_Type 'Male Pin'
+PRP Mount 'Through Hole'
+PRP Number_of_Positions '3'
+PRP Number_of_Rows '1'
+PRP Package_Quantity '1000'
+PRP Packaging 'Bulk'
+PRP Pitch '0.098inch'
+PRP Series 'XH'
+PRP Termination 'Press-Fit'
+TOP 0 -36.24200016 30.099 0 N 3 1 1
+TOP 1 -33.74200008 30.099 0 N 2 1 2
+TOP 2 -31.242 30.099 0 N 1 1 3
+#
+# CMP 3
+CMP 15 20.72200072 27.98700016 0 N U1 ESP32-S3_WROOM-1_(N16R8) ;0=1,1=3.2500
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 '1965-ESP32-S3-WROOM-1-N16R8CT-ND'
+TOP 0 29.472001 33.2469998 180 N 17 18 1
+TOP 1 29.472001 31.9769998 180 N 4 7 2
+TOP 2 29.472001 30.7069998 180 N 25 3 3
+TOP 3 29.472001 29.4369998 180 N 0 7 4
+TOP 4 29.472001 28.1669998 180 N 26 0 5
+TOP 5 29.472001 26.8969998 180 N 19 0 6
+TOP 6 29.472001 25.6269998 180 N 22 0 7
+TOP 7 29.472001 24.3569998 180 N 0 8 8
+TOP 8 29.472001 23.0869998 180 N 18 0 9
+TOP 9 29.472001 21.8169998 180 N 0 9 10
+TOP 10 29.472001 20.5469998 180 N 0 10 11
+TOP 11 29.472001 19.2769998 180 N 0 11 12
+TOP 12 29.472001 18.0069998 180 N 0 12 13
+TOP 13 29.472001 16.7369998 180 N 0 13 14
+TOP 14 27.70700072 15.48699976 180 N 0 14 15
+TOP 15 26.43700072 15.48699976 180 N 0 22 16
+TOP 16 25.16700072 15.48699976 180 N 0 23 17
+TOP 17 23.89700072 15.48699976 180 N 23 0 18
+TOP 18 22.62700072 15.48699976 180 N 20 0 19
+TOP 19 21.35700072 15.48699976 180 N 24 0 20
+TOP 20 20.08700072 15.48699976 180 N 21 0 21
+TOP 21 18.81700072 15.48699976 180 N 0 24 22
+TOP 22 17.54700072 15.48699976 180 N 0 25 23
+TOP 23 16.27700072 15.48699976 180 N 0 26 24
+TOP 24 15.00700072 15.48699976 180 N 0 27 25
+TOP 25 13.73700072 15.48699976 180 N 0 28 26
+TOP 26 11.97200044 16.7369998 180 N 16 2 27
+TOP 27 11.97200044 18.0069998 180 N 0 15 28
+TOP 28 11.97200044 19.2769998 180 N 0 16 29
+TOP 29 11.97200044 20.5469998 180 N 0 17 30
+TOP 30 11.97200044 21.8169998 180 N 0 18 31
+TOP 31 11.97200044 23.0869998 180 N 0 19 32
+TOP 32 11.97200044 24.3569998 180 N 7 0 33
+TOP 33 11.97200044 25.6269998 180 N 9 0 34
+TOP 34 11.97200044 26.8969998 180 N 0 20 35
+TOP 35 11.97200044 28.1669998 180 N 8 0 36
+TOP 36 11.97200044 29.4369998 180 N 6 0 37
+TOP 37 11.97200044 30.7069998 180 N 0 21 38
+TOP 38 11.97200044 31.9769998 180 N 12 1 39
+TOP 39 11.97200044 33.2469998 180 N 17 25 40
+TOP 40 23.622 25.527 180 N 17 19 41
+TOP 41 20.82200052 25.527 180 N 17 20 41
+TOP 42 23.622 24.12700026 180 N 17 21 41
+TOP 43 22.22200026 24.12700026 180 N 17 22 41
+TOP 44 20.82200052 24.12700026 180 N 17 23 41
+TOP 45 20.82200052 26.92699974 180 N 17 24 41
+TOP 46 23.622 26.92699974 180 N 17 26 41
+TOP 47 22.22200026 26.92699974 180 N 17 27 41
+TOP 48 22.22200026 25.527 180 N 17 28 41
+TOP 49 22.24600072 25.57400016 180 N 17 39 41
+#
+# CMP 4
+CMP 13 -19.812 29.464 0 N U2 2x4_ESP01s ;0=2,1=6.5000
+TOP 0 -16.002 21.10399894 180 N 17 38 1
+TOP 1 -18.542 21.10399894 180 N 0 39 2
+TOP 2 -21.082 21.10399894 180 N 0 38 3
+TOP 3 -23.622 21.10399894 180 N 9 1 4
+TOP 4 -16.002 18.56399894 180 N 7 1 5
+TOP 5 -18.542 18.56399894 180 N 11 1 6
+TOP 6 -21.082 18.56399894 180 N 10 1 7
+TOP 7 -23.622 18.56399894 180 N 4 10 8
+#
+# CMP 5
+CMP 14 15.367 -25.4 90 N VR1 AMS1117-3.3 ;0=1,1=1.8000
+PRP Availability 'Not in stock'
+PRP Check_prices 'https://www.snapeda.com/parts/AMS1117-3.3/Advanced+Monolithic+Systems/view-part/?ref=eda'
+PRP MF 'Advanced Monolithic Systems'
+PRP MP 'AMS1117-3.3'
+PRP Package 'SOT-223 Seeed Technology'
+PRP Price 'None'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/AMS1117-3.3/Advanced+Monolithic+Systems/view-part/?ref=snap'
+PRP Value ''
+TOP 0 13.0769995 -22.05500034 90 N 17 17 1
+TOP 1 15.367 -22.05500034 90 N 4 6 2
+TOP 2 17.6570005 -22.05500034 90 N 27 2 3
+TOP 3 15.367 -28.74499966 90 N 0 6 4
+#
+# CMP 6
+CMP 7 20.955 2.667 90 N GPIO0 1571527-2 ;0=1,1=0.0000
+PRP Actuator_Length '0.7mm'
+PRP Actuator_Material 'Polyphenylene'
+PRP Actuator_Type 'Standard'
+PRP Case/Package 'SMD/SMT'
+PRP Contact_Material 'Copper Alloy'
+PRP Contact_Plating 'Silver'
+PRP Current_Rating '50mA'
+PRP Depth '10mm'
+PRP ELV 'Compliant'
+PRP Height '4.3mm'
+PRP Illumination_Type 'Non-Illuminated'
+PRP Length '6mm'
+PRP Material 'Polyamide'
+PRP Max_Current_Rating '50mA'
+PRP Max_Operating_Temperature '85°C'
+PRP Mechanical_Life '200000Cycles'
+PRP Min_Operating_Temperature '-35°C'
+PRP Mount 'Surface Mount'
+PRP Operating_Force '100gf'
+PRP Orientation 'Straight'
+PRP Package_Quantity '1'
+PRP Packaging 'Tape and Reel'
+PRP REACH_SVHC 'No SVHC'
+PRP RoHS_Compliant 'Yes'
+PRP Series 'FSMJSML, Alcoswitch'
+PRP Switch_Function 'Off-Mom'
+PRP Switch_Travel '0.25mm'
+PRP Termination 'Gull Wing'
+PRP Throw_Configuration 'SPST'
+PRP Type 'Switch'
+PRP Voltage_Rating_(DC) '24V'
+TOP 0 16.40499894 4.91700058 90 N 17 14 1
+TOP 1 25.50500106 4.91700058 90 N 0 2 2
+TOP 2 25.50500106 0.41699942 90 N 0 3 3
+TOP 3 16.40499894 0.41699942 90 N 16 1 4
+#
+# CMP 7
+CMP 7 21.082 -6.604 90 N CHIP_PU 1571527-2 ;0=1,1=0.0000
+PRP Actuator_Length '0.7mm'
+PRP Actuator_Material 'Polyphenylene'
+PRP Actuator_Type 'Standard'
+PRP Case/Package 'SMD/SMT'
+PRP Contact_Material 'Copper Alloy'
+PRP Contact_Plating 'Silver'
+PRP Current_Rating '50mA'
+PRP Depth '10mm'
+PRP ELV 'Compliant'
+PRP Height '4.3mm'
+PRP Illumination_Type 'Non-Illuminated'
+PRP Length '6mm'
+PRP Material 'Polyamide'
+PRP Max_Current_Rating '50mA'
+PRP Max_Operating_Temperature '85°C'
+PRP Mechanical_Life '200000Cycles'
+PRP Min_Operating_Temperature '-35°C'
+PRP Mount 'Surface Mount'
+PRP Operating_Force '100gf'
+PRP Orientation 'Straight'
+PRP Package_Quantity '1'
+PRP Packaging 'Tape and Reel'
+PRP REACH_SVHC 'No SVHC'
+PRP RoHS_Compliant 'Yes'
+PRP Series 'FSMJSML, Alcoswitch'
+PRP Switch_Function 'Off-Mom'
+PRP Switch_Travel '0.25mm'
+PRP Termination 'Gull Wing'
+PRP Throw_Configuration 'SPST'
+PRP Type 'Switch'
+PRP Voltage_Rating_(DC) '24V'
+TOP 0 16.53199894 -4.35399942 90 N 17 5 1
+TOP 1 25.63200106 -4.35399942 90 N 0 0 2
+TOP 2 25.63200106 -8.85400058 90 N 0 1 3
+TOP 3 16.53199894 -8.85400058 90 N 25 0 4
+#
+# CMP 8
+CMP 11 -9.779 30.988 90 N R5 10k_,_0.1%,150V ;0=1,1=0.0000
+PRP Case_Code_(Imperial) '0805'
+PRP Case_Code_(Metric) '2012'
+PRP Case/Package '0805'
+PRP Features 'Automotive AEC-Q200'
+PRP Height '0.02inch'
+PRP Lead_Free 'Lead Free'
+PRP Length '0.079inch'
+PRP Max_Operating_Temperature '155°C'
+PRP Max_Power_Dissipation '125mW'
+PRP Min_Operating_Temperature '-55°C'
+PRP Number_of_Terminations '2'
+PRP Package_Quantity '5000'
+PRP Packaging 'Tape and Reel'
+PRP Power_Rating '100mW'
+PRP Resistance '10kR'
+PRP Resistor_Type 'Thin Film'
+PRP RoHS_Compliant 'Yes'
+PRP Series 'RG'
+PRP Size_Code '0805'
+PRP Temperature_Coefficient '10ppm/°C'
+PRP Termination 'SMD/SMT'
+PRP Tolerance '0.1%'
+PRP Voltage_Rating '100V'
+PRP Voltage_Rating_(DC) '150V'
+PRP Width '0.049inch'
+TOP 0 -9.779 31.96364956 90 N 12 0 1
+TOP 1 -9.779 30.01235044 90 N 14 1 2
+#
+# CMP 9
+CMP 11 -36.068 18.415 0 N R4 10k_,_0.1%,150V ;0=1,1=0.0000
+PRP Case_Code_(Imperial) '0805'
+PRP Case_Code_(Metric) '2012'
+PRP Case/Package '0805'
+PRP Features 'Automotive AEC-Q200'
+PRP Height '0.02inch'
+PRP Lead_Free 'Lead Free'
+PRP Length '0.079inch'
+PRP Max_Operating_Temperature '155°C'
+PRP Max_Power_Dissipation '125mW'
+PRP Min_Operating_Temperature '-55°C'
+PRP Number_of_Terminations '2'
+PRP Package_Quantity '5000'
+PRP Packaging 'Tape and Reel'
+PRP Power_Rating '100mW'
+PRP Resistance '10kR'
+PRP Resistor_Type 'Thin Film'
+PRP RoHS_Compliant 'Yes'
+PRP Series 'RG'
+PRP Size_Code '0805'
+PRP Temperature_Coefficient '10ppm/°C'
+PRP Termination 'SMD/SMT'
+PRP Tolerance '0.1%'
+PRP Voltage_Rating '100V'
+PRP Voltage_Rating_(DC) '150V'
+PRP Width '0.049inch'
+TOP 0 -35.09235044 18.415 180 N 11 0 1
+TOP 1 -37.04364956 18.415 180 N 4 0 2
+#
+# CMP 10
+CMP 11 -30.353 18.415 180 N R3 10k_,_0.1%,150V ;0=1,1=0.0000
+PRP Case_Code_(Imperial) '0805'
+PRP Case_Code_(Metric) '2012'
+PRP Case/Package '0805'
+PRP Features 'Automotive AEC-Q200'
+PRP Height '0.02inch'
+PRP Lead_Free 'Lead Free'
+PRP Length '0.079inch'
+PRP Max_Operating_Temperature '155°C'
+PRP Max_Power_Dissipation '125mW'
+PRP Min_Operating_Temperature '-55°C'
+PRP Number_of_Terminations '2'
+PRP Package_Quantity '5000'
+PRP Packaging 'Tape and Reel'
+PRP Power_Rating '100mW'
+PRP Resistance '10kR'
+PRP Resistor_Type 'Thin Film'
+PRP RoHS_Compliant 'Yes'
+PRP Series 'RG'
+PRP Size_Code '0805'
+PRP Temperature_Coefficient '10ppm/°C'
+PRP Termination 'SMD/SMT'
+PRP Tolerance '0.1%'
+PRP Voltage_Rating '100V'
+PRP Voltage_Rating_(DC) '150V'
+PRP Width '0.049inch'
+TOP 0 -31.32864956 18.415 0 N 10 0 1
+TOP 1 -29.37735044 18.415 0 N 4 1 2
+#
+# CMP 11
+CMP 11 15.748 -15.748 270 N R2 10k_,_0.1%,150V ;0=1,1=0.0000
+PRP Case_Code_(Imperial) '0805'
+PRP Case_Code_(Metric) '2012'
+PRP Case/Package '0805'
+PRP Features 'Automotive AEC-Q200'
+PRP Height '0.02inch'
+PRP Lead_Free 'Lead Free'
+PRP Length '0.079inch'
+PRP Max_Operating_Temperature '155°C'
+PRP Max_Power_Dissipation '125mW'
+PRP Min_Operating_Temperature '-55°C'
+PRP Number_of_Terminations '2'
+PRP Package_Quantity '5000'
+PRP Packaging 'Tape and Reel'
+PRP Power_Rating '100mW'
+PRP Resistance '10kR'
+PRP Resistor_Type 'Thin Film'
+PRP RoHS_Compliant 'Yes'
+PRP Series 'RG'
+PRP Size_Code '0805'
+PRP Temperature_Coefficient '10ppm/°C'
+PRP Termination 'SMD/SMT'
+PRP Tolerance '0.1%'
+PRP Voltage_Rating '100V'
+PRP Voltage_Rating_(DC) '150V'
+PRP Width '0.049inch'
+TOP 0 15.748 -16.72364956 270 N 4 2 1
+TOP 1 15.748 -14.77235044 270 N 15 0 2
+#
+# CMP 12
+CMP 11 12.954 -10.033 90 N R1 RG2012N-103-B-T5 ;0=1,1=0.0000
+PRP Case_Code_(Imperial) '0805'
+PRP Case_Code_(Metric) '2012'
+PRP Case/Package '0805'
+PRP Features 'Automotive AEC-Q200'
+PRP Height '0.02inch'
+PRP Lead_Free 'Lead Free'
+PRP Length '0.079inch'
+PRP Max_Operating_Temperature '155°C'
+PRP Max_Power_Dissipation '125mW'
+PRP Min_Operating_Temperature '-55°C'
+PRP Number_of_Terminations '2'
+PRP Package_Quantity '5000'
+PRP Packaging 'Tape and Reel'
+PRP Power_Rating '100mW'
+PRP Resistance '10kR'
+PRP Resistor_Type 'Thin Film'
+PRP RoHS_Compliant 'Yes'
+PRP Series 'RG'
+PRP Size_Code '0805'
+PRP Temperature_Coefficient '10ppm/°C'
+PRP Termination 'SMD/SMT'
+PRP Tolerance '0.1%'
+PRP Voltage_Rating '100V'
+PRP Voltage_Rating_(DC) '150V'
+PRP Width '0.049inch'
+TOP 0 12.954 -9.05735044 90 N 25 1 1
+TOP 1 12.954 -11.00864956 90 N 4 3 2
+#
+# CMP 13
+CMP 4 -11.557 -22.733 180 N MOD2 DC-DC_Buck_converter_MP1584_or_XL4015 ;0=2,1=0.0000
+TOP 0 -31.877 -31.623 0 N 13 1 1
+TOP 1 -31.877 -13.843 0 N 17 33 2
+TOP 2 8.763 -31.623 0 N 27 3 3
+TOP 3 8.763 -13.843 0 N 17 34 4
+#
+# CMP 14
+CMP 4 -11.557 -0.889 180 N MOD1 DC-DC_Boost_converter_XL6009 ;0=2,1=0.0000
+TOP 0 -31.877 -9.779 0 N 5 2 1
+TOP 1 -31.877 8.001 0 N 17 30 2
+TOP 2 8.763 -9.779 0 N 28 0 3
+TOP 3 8.763 8.001 0 N 17 29 4
+#
+# CMP 15
+CMP 10 42.66200002 27.94 0 N LS1 MCKPX-G1203A-K4056 ;0=2,1=0.0000
+PRP Automotive 'No'
+PRP Category 'Speak'
+PRP ComponentLink2Description 'Datasheet'
+PRP ComponentLink2URL 'http://www.farnell.com/datasheets/1498149.pdf?_ga=2.17855225.1157923166.1572356775-536200964.1569240579'
+PRP Current '30mA'
+PRP Device_Class_L1 'Electromechanical'
+PRP Device_Class_L2 'Audio Products'
+PRP Device_Class_L3 'Buzzers'
+PRP Frequency '2300Hz'
+PRP Height '9.5mm'
+PRP Lead_Free 'Yes'
+PRP Manufacturer 'Multicomp Pro'
+PRP Manufacturer_Part_Number 'MCKPX-G1203A-K4056'
+PRP Max_Supply_Voltage '5V'
+PRP Min_Supply_Voltage '2V'
+PRP Octopart 'https://octopart.com/mckpx-g1203a-k4056-multicomp-12157154'
+PRP Operating_Supply_Voltage '3V'
+PRP Package '0'
+PRP RoHS 'TRUE'
+PRP Standoff_Height '0.5mm'
+PRP Temperature '-20°C to +70°C'
+PRP Temperature_Range_High '+70°C'
+PRP Temperature_Range_Low '-20°C'
+TOP 0 38.862 27.94 180 N 26 1 +
+TOP 1 46.46200004 27.94 180 N 17 36 -
+#
+# CMP 16
+CMP 12 27.559 -14.351 0 N FTDL_POWER FTDL_POWER ;0=2,1=7.0000
+PRP Check_prices 'https://www.snapeda.com/parts/B2B-XH-A(LF)(SN)/JST+Sales+America+Inc./view-part/?ref=eda'
+PRP MF 'JST Sales America Inc.'
+PRP MP 'B2B-XH-A(LF)(SN)'
+PRP Package 'None'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/B2B-XH-A(LF)(SN)/JST+Sales+America+Inc./view-part/?ref=snap'
+PRP Value ''
+TOP 0 26.30899996 -14.87600022 180 N 27 4 1
+TOP 1 28.80900004 -14.87600022 180 N 17 37 2
+#
+# CMP 17
+CMP 12 -44.704 29.591 180 N P3 Power_Button_Connector_B2B-XH-A(LF)(SN) ;0=2,1=7.0000
+PRP Check_prices 'https://www.snapeda.com/parts/B2B-XH-A(LF)(SN)/JST+Sales+America+Inc./view-part/?ref=eda'
+PRP MF 'JST Sales America Inc.'
+PRP MP 'B2B-XH-A(LF)(SN)'
+PRP Package 'None'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/B2B-XH-A(LF)(SN)/JST+Sales+America+Inc./view-part/?ref=snap'
+PRP Value ''
+TOP 0 -43.45399996 30.11600022 0 N 28 1 1
+TOP 1 -45.95400004 30.11600022 0 N 13 0 2
+#
+# CMP 18
+CMP 12 -3.683 27.305 270 N P1 TX_RX_Header ;0=2,1=7.0000
+TOP 0 -4.20800022 28.55500004 270 N 6 1 1
+TOP 1 -4.20800022 26.05499996 270 N 8 1 2
+#
+# CMP 19
+CMP 5 -9.906 25.908 270 N D2 LTST-C171TBKT ;0=1,1=0.0000
+PRP Check_prices 'https://www.snapeda.com/parts/LTST-C171TBKT/Lite-On+Inc./view-part/?ref=eda'
+PRP MF 'Lite-On Inc.'
+PRP MP 'LTST-C171TBKT'
+PRP Package '0805 Lite-On'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/LTST-C171TBKT/Lite-On+Inc./view-part/?ref=snap'
+PRP Value ''
+TOP 0 -9.906 26.95800044 270 N 14 0 A
+TOP 1 -9.906 24.85799956 270 N 17 13 C
+#
+# CMP 20
+CMP 5 13.081 -15.621 270 N D1 LTST-C171TBKT ;0=1,1=0.0000
+PRP Check_prices 'https://www.snapeda.com/parts/LTST-C171TBKT/Lite-On+Inc./view-part/?ref=eda'
+PRP MF 'Lite-On Inc.'
+PRP MP 'LTST-C171TBKT'
+PRP Package '0805 Lite-On'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/LTST-C171TBKT/Lite-On+Inc./view-part/?ref=snap'
+PRP Value ''
+TOP 0 13.081 -14.57099956 270 N 15 1 A
+TOP 1 13.081 -16.67100044 270 N 17 6 C
+#
+# CMP 21
+CMP 3 36.322 -22.62700072 270 N C8 0.1uF_50V_X8L_10% ;0=1,1=0.0000
+PRP Check_prices 'https://www.snapeda.com/parts/GCJ21BL81H104KA01L/Murata+Electronics+North+America/view-part/?ref=eda'
+PRP MF 'Murata'
+PRP MP 'GCJ21BL81H104KA01L'
+PRP Package '2012 Murata'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/GCJ21BL81H104KA01L/Murata+Electronics+North+America/view-part/?ref=snap'
+PRP Value ''
+TOP 0 36.322 -23.53700144 270 N 17 12 1
+TOP 1 36.322 -21.717 270 N 4 5 2
+#
+# CMP 22
+CMP 3 26.924 -22.62700072 270 N C7 0.1uF_50V_X8L_10% ;0=1,1=0.0000
+PRP Check_prices 'https://www.snapeda.com/parts/GCJ21BL81H104KA01L/Murata+Electronics+North+America/view-part/?ref=eda'
+PRP MF 'Murata'
+PRP MP 'GCJ21BL81H104KA01L'
+PRP Package '2012 Murata'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/GCJ21BL81H104KA01L/Murata+Electronics+North+America/view-part/?ref=snap'
+PRP Value ''
+TOP 0 26.924 -23.53700144 270 N 17 7 1
+TOP 1 26.924 -21.717 270 N 27 0 2
+#
+# CMP 23
+CMP 2 31.496 -24.50200078 90 N C6 10uF/50V_(20%) ;0=1,1=0.0000
+TOP 0 31.496 -22.352 90 N 4 4 1
+TOP 1 31.496 -26.65200156 90 N 17 11 2
+#
+# CMP 24
+CMP 2 22.479 -24.54999916 90 N C5 10uF/50V_(20%) ;0=1,1=0.0000
+TOP 0 22.479 -22.39999838 90 N 27 1 1
+TOP 1 22.479 -26.69999994 90 N 17 8 2
+#
+# CMP 25
+CMP 3 12.827 2.921 90 N C4 0.1uF_50V_X8L_10% ;0=1,1=0.0000
+PRP Check_prices 'https://www.snapeda.com/parts/GCJ21BL81H104KA01L/Murata+Electronics+North+America/view-part/?ref=eda'
+PRP MF 'Murata'
+PRP MP 'GCJ21BL81H104KA01L'
+PRP Package '2012 Murata'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/GCJ21BL81H104KA01L/Murata+Electronics+North+America/view-part/?ref=snap'
+PRP Value ''
+TOP 0 12.827 3.83100072 90 N 17 9 1
+TOP 1 12.827 2.01099928 90 N 16 0 2
+#
+# CMP 26
+CMP 3 12.954 -5.715 90 N C3 0.1uF_50V_X8L_10% ;0=1,1=0.0000
+PRP Check_prices 'https://www.snapeda.com/parts/GCJ21BL81H104KA01L/Murata+Electronics+North+America/view-part/?ref=eda'
+PRP MF 'Murata'
+PRP MP 'GCJ21BL81H104KA01L'
+PRP Package '2012 Murata'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/GCJ21BL81H104KA01L/Murata+Electronics+North+America/view-part/?ref=snap'
+PRP Value ''
+TOP 0 12.954 -4.80499928 90 N 17 10 1
+TOP 1 12.954 -6.62500072 90 N 25 2 2
+#
